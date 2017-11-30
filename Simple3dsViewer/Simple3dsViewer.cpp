@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
 	if (argc < 2) {
 		std::cout << "Enter file path to the destination .3ds file (you can also enter it as a command line argument): " << std::endl;
 		std::cin >> filePath;
-		return -1;
 	}
 	else {
 		filePath = argv[1];
