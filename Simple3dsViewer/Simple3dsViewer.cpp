@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		filePath = argv[1];
 	}
 	
-	//	Attempt to load needed data from specified file. On failure program exits:
+	//	Attempt to load needed data from specified file into Model class. On failure program exits:
 
 	Model* model = new Model();
 	Loader3DS* loader = new Loader3DS(model, filePath);
@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
 
 	glfwSetKeyCallback(window, key_callback);
 
+	//Finally opengl stuff: setting Model data to opengl buffers. Creating shaders. Starting drawing loop
 
 	model->setup();
 	Shader* shader = new Shader("Vertex.shader", "Fragment.shader");
