@@ -1,3 +1,7 @@
+/*
+Currently loading only Verticies and Indices : )
+*/
+
 #pragma once
 
 #include <stdio.h>

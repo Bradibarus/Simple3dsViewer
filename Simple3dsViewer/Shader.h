@@ -1,3 +1,7 @@
+/*
+Encapsulation of shaders compilation, linking and use
+*/
+
 #pragma once
 #include <string>
 #include <iostream>

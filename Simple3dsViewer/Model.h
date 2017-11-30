@@ -1,3 +1,7 @@
+/*
+Just kind of a container for meshes
+*/
+
 #pragma once
 #include <vector>
 #include "Mesh.h"
