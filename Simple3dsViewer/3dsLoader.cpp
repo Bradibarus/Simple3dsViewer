@@ -1,39 +1,48 @@
 #include "3dsLoader.h"
 
+
 Loader3DS::Loader3DS(Model* model, const char* filePath)
 {
+	this->model = model;
+	this->filePath = filePath;
+};
+
+int Loader3DS::load() {
+
 	currentChunk = new Chunk;
 
 	fopen_s(&filePointer, filePath, "rb");
 	std::cout << "Opening file: " << filePath << std::endl;
-	if (!filePointer) std::cout << "ERROR OPENING 3DS FILE" << std::endl;
+	if (!filePointer) {
+		std::cout << "ERROR OPENING 3DS FILE" << std::endl;
+		return -1;
+	}
+
 	if (filePointer) std::cout << "FILE OPENED" << std::endl;
 
 	readChunk(currentChunk);
-	if (currentChunk->id != PRIMARY) std::cout << "ERROR READING PRIMARY CHUNK" << std::endl;
+	if (currentChunk->id != PRIMARY) {
+		std::cout << "ERROR READING PRIMARY CHUNK" << std::endl;
+		return -1;
+	}
 	else std::cout << "PRIMARY CHUNK found!" << std::endl;
 
-	
+
 	processNextChunk(model, currentChunk);
-};
+	return 0;
+}
 
 void Loader3DS::readChunk(Chunk* chunk)
 {
 	std::cout << "Processing" << std::endl;
 	chunk->bytesRead = fread(&chunk->id, 1, 2, filePointer);
 	chunk->bytesRead += fread(&chunk->length, 1, 4, filePointer);
-	if (chunk->bytesRead != 6) {
-		std::cout << "NOT RIGHT BYTES READ!" << chunk->bytesRead << std::endl;
-		getchar();
-	}
-	std::cout << "\nChunk ID: " << std::hex << chunk->id << std::endl
-		<< "Chunk Length dec: " << std::dec << chunk->length << std::endl
-	<< "Chunk Length hex: " << std::hex << chunk->length << std::endl;
+	
+	std::cout << "\nChunk ID: " << std::hex << chunk->id << std::endl;
 }
 
 void Loader3DS::processNextChunk(Model* model, Chunk* previousChunk)
 {
-	std::cout << "Digging deeper!" << std::endl;
 	currentChunk = new Chunk;
 	while (previousChunk->bytesRead < previousChunk->length)
 	{

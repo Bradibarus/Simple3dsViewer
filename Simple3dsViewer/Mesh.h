@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <glm1\glm.hpp>
+#include <glm/glm/glm.hpp>
 #include "Shader.h"
 
 struct Vertex {

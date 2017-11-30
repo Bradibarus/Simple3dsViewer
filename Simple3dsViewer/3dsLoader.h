@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <io.h>
 #include <string>
-#include "glm1\glm.hpp"
+#include "glm/glm/glm.hpp"
 #include "Mesh.h"
 #include "Model.h"
 
@@ -30,7 +30,13 @@ class  Loader3DS
 {
 public:
 	Loader3DS(Model* model, const char* filePath);
+	void setModel(Model* model);
+	void setFilePath(const char* filePath);
+	int load();
 private:
+	Model* model;
+	const char* filePath;
+
 	FILE* filePointer;
 	Chunk* currentChunk;
 	void readChunk(Chunk* chunk);

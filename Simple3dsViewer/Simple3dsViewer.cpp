@@ -3,9 +3,9 @@
 #include <vector>
 #include "glad/glad.h"
 #include "glfw/include/GLFW/glfw3.h"
-#include <glm1\glm.hpp>
-#include <glm1\gtc\matrix_transform.hpp>
-#include <glm1\gtc\type_ptr.hpp>
+#include <glm/glm/glm.hpp>
+#include <glm/glm/gtc/matrix_transform.hpp>
+#include <glm/glm/gtc/type_ptr.hpp>
 
 #include "Shader.h"
 #include "Mesh.h"
@@ -63,8 +63,14 @@ int main(int argc, char *argv[])
 
 	Model* model = new Model();
 	Shader* shader = new Shader("Vertex.shader", "Fragment.shader");
-	Loader3DS* load = new Loader3DS(model, filePath);
-
+	Loader3DS* loader = new Loader3DS(model, filePath);
+	if (loader->load() == 0) {
+		std::cout << "LOADING SUCCESSFUL" << std::endl;
+	}
+	else {
+		std::cout << "ERROR LOADING FROM FILE" << std::endl;
+		return -1;
+	}
 	model->setup();
 
 	while (!glfwWindowShouldClose(window))
