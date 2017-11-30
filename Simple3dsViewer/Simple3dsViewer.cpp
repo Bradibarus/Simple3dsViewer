@@ -37,6 +37,21 @@ int main(int argc, char *argv[])
 	else {
 		filePath = argv[1];
 	}
+	
+	//	Attempt to load needed data from specified file. On failure program exits:
+
+	Model* model = new Model();
+	Loader3DS* loader = new Loader3DS(model, filePath);
+	if (loader->load() == 0) {
+		std::cout << "LOADING SUCCESSFUL" << std::endl;
+	}
+	else {
+		std::cout << "ERROR LOADING FROM FILE" << std::endl;
+		return -1;
+	}
+
+	//	Basic glfw initialization:
+
 	glfwInit();
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "3DS File Viewer", nullptr, nullptr);
@@ -61,17 +76,9 @@ int main(int argc, char *argv[])
 
 	glfwSetKeyCallback(window, key_callback);
 
-	Model* model = new Model();
-	Shader* shader = new Shader("Vertex.shader", "Fragment.shader");
-	Loader3DS* loader = new Loader3DS(model, filePath);
-	if (loader->load() == 0) {
-		std::cout << "LOADING SUCCESSFUL" << std::endl;
-	}
-	else {
-		std::cout << "ERROR LOADING FROM FILE" << std::endl;
-		return -1;
-	}
+
 	model->setup();
+	Shader* shader = new Shader("Vertex.shader", "Fragment.shader");
 
 	while (!glfwWindowShouldClose(window))
 	{
